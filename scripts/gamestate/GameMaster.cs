@@ -8,5 +8,7 @@ public class GameMaster : Node
 		AF.Vector2 v = new AF.Vector2(11.42,16.44);
 		GD.Print("Hello!");
 		GD.Print(v);
+
+		GameState test = new GameState(Maps.GetLevel1(), 2);
 	}
 }
