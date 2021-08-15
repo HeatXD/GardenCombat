@@ -16,7 +16,8 @@ config/icon="res://icon.png"
 
 [gdnative]
 
-singletons=[ "res://addons/webrtc/webrtc.tres", "res://addons/webrtc_debug/webrtc_debug.tres" ]
+singletons=[ "res://webrtc/webrtc.tres", "res://webrtc_debug/webrtc_debug.tres" ]
+singletons_disabled=[  ]
 
 [physics]
 

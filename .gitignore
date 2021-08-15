@@ -1,5 +1,5 @@
-addons/webrtc
-addons/webrtc_debug
+webrtc
+webrtc_debug
 # Godot 4+ specific ignores
 .godot/
 
