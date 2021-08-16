@@ -2,8 +2,8 @@ using System;
 
 public struct TileState
 {
-    MapTileType TileType { get; set; }
-    sbyte OwnedBy { get; set; }
+    public MapTileType TileType { get; set; }
+    public sbyte OwnedBy { get; set; }
 
     public TileState(MapTileType tileType, bool isStatic)
     {
