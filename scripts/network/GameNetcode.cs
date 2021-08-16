@@ -32,11 +32,13 @@ public class GameNetcode
         //game starts even
         this.RemoteFrameAdvantage = 0;
     }
+
     public bool RollbackCondition()
     {
         //No need to rollback if we don't have a frame after the previous sync frame to synchronize to.
         return LocalFrame > SyncFrame && RemoteFrame > SyncFrame;
     }
+
     public bool TimeSyncedCondition()
     {
         //How far the client is ahead of the last reported frame by the remote client
@@ -46,14 +48,17 @@ public class GameNetcode
         //Only allow the local client to get so far ahead of remote
         return localFrameAdvantage < MaxRollbackFrames && frameAdvantageDifference <= FrameAdvantageLimit;
     }
+
     public void UpdateGamestate(AF.Fixed64 dt)
     {
         UpdateGameEvent(dt);
     }
+
     public void RestoreGamestate()
     {
         RestoreGameEvent();
     }
+
     public void StoreGamestate()
     {
         StoreGameEvent();
