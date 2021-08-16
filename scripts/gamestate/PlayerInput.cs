@@ -24,4 +24,5 @@ public struct PlayerInput
 		if (bitIndex < 0 || bitIndex > 15) return false; 
 		return (this.InputState & (1 << bitIndex)) > 0;
 	}
+	
 }
