@@ -4,8 +4,8 @@ using GC = Godot.Collections;
 
 public class GameNetwork : Node
 {
-	[Signal] public delegate void GameNetConnected(GC.Dictionary info); // Network Connected to Signaling Server
-	[Signal] public delegate void GameNetClosed(GC.Dictionary info); // Network Disconnected from the Signaling Server
+	[Signal] public delegate void GameNetConnected(); // Network Connected to Signaling Server
+	[Signal] public delegate void GameNetClosed(bool wasClean); // Network Disconnected from the Signaling Server
 	[Signal] public delegate void GameNetRPK(GC.Dictionary info); // Register Player Ok
 	[Signal] public delegate void GameNetRPB(GC.Dictionary info); // Register Player Bad
 	[Signal] public delegate void GameNetCRK(GC.Dictionary info); // Create Room  OK 
@@ -50,16 +50,12 @@ public class GameNetwork : Node
 
 	public void OnConnected(string proto)
 	{
-		GD.Print("Connected to the server!");
-		//Client.GetPeer(ServerID).PutPacket("Hello from client ");
-		var msg = CreateCommand("###!RP", "HeatXD");
-		SendCommand(msg);
-		// /Client.GetPeer(ServerID).PutPacket("###!CR".ToUTF8());
+		EmitSignal(nameof(GameNetConnected));
 	}
 
 	public void OnClosed(bool wasClean)
 	{
-		GD.Print("Connection to the server closed! Connection Closed Cleanly? : " + wasClean);
+		EmitSignal(nameof(GameNetClosed), wasClean);
 		SetProcess(false);
 	}
 
@@ -69,7 +65,6 @@ public class GameNetwork : Node
 		var message = JSON.Parse(data).Result;
 		GC.Dictionary parsed = message as GC.Dictionary;
 		HandleCommand(parsed);
-		//GD.Print(parsed["command"]);
 	}
 
 	public void HandleCommand(GC.Dictionary message)
