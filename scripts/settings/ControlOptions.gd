@@ -1,5 +1,7 @@
 extends Node
 
+var bindingsChanged = false
+
 var canChangeKey = false
 var actionString
 enum ACTIONS {move_up, move_down, move_left, move_right, use_item_1, use_item_2, use_item_3}
@@ -36,6 +38,10 @@ func _changeKey(newKey):
 	#Add new Key
 	InputMap.action_add_event(actionString, newKey)
 
+	#Marking bindings as changed
+	bindingsChanged = true
+	get_node("HSplitContainer/RightContainer/SavedLabel").visible = true
+
 	_setKeys()
 
 func _input(event):
@@ -44,6 +50,11 @@ func _input(event):
 			_changeKey(event)
 			canChangeKey = false
 
+
+func _saveBindings():
+	Keybinds.SaveBindings()
+	bindingsChanged = false
+	get_node("HSplitContainer/RightContainer/SavedLabel").visible = false
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):
 #	pass
@@ -78,4 +89,35 @@ func _on_Button_UseItem3_pressed():
 
 
 func _on_SaveButton_pressed():
-	Keybinds.SaveBindings()
+	_saveBindings()
+
+func _unhandled_input(event):
+	if event is InputEventKey:
+		if event.pressed and event.scancode == KEY_ESCAPE:
+			if bindingsChanged:
+				#Prompting user to save altered keybinds
+				get_node("../../SaveConfirmDialog").show()
+			else:
+				get_node("../../../OptionsMenuContainer").visible = false
+				get_node("../../../MainMenuContainer").visible = true
+
+
+func _on_SaveConfirmDialog_confirmed():
+	_saveBindings()
+
+
+func _on_BackButton_pressed():
+	if bindingsChanged:
+		#Prompting user to save altered keybinds
+		get_node("../../SaveConfirmDialog").show()
+	else:
+		get_node("../../../OptionsMenuContainer").visible = false
+		get_node("../../../MainMenuContainer").visible = true
+
+
+func _on_ReturnToDefaultButton_pressed():
+	bindingsChanged = true
+	get_node("HSplitContainer/RightContainer/SavedLabel").visible = true
+
+	Keybinds.SetDefaultBindings()
+	_setKeys()
