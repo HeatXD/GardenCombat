@@ -66,5 +66,5 @@ func _on_ResolutionButton_item_selected(index):
 
 func _on_FullscreenButton_toggled(button_pressed):
 	#Toggles the fullscreen setting
-	OS.window_fullscreen = !OS.window_fullscreen
+	OS.window_fullscreen = button_pressed
 	_updateFullscreenButton()
