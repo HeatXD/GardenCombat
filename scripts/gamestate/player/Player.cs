@@ -7,7 +7,7 @@ public struct Player
     public AF.Vector2 Velocity { get; set; }
     public AF.Vector2 Acceleration { get; set; }
     public PlayerInput GameInput { get; set; }
-
+    public int[] Items { get; set; }
     public void ResolveMapCollisions()
     {
         throw new NotImplementedException();
@@ -16,5 +16,15 @@ public struct Player
     {
         this.Velocity += this.Acceleration * dt;
         this.Position += this.Velocity * dt;
+    }
+    public void Update(AF.Fixed64 dt)
+    {
+        ProcessMotion(dt);
+        ResolveMapCollisions();
+    }
+
+    public void GetInput()
+    {
+
     }
 }
