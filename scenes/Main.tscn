@@ -83,13 +83,25 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="SaveConfirmDialog" type="ConfirmationDialog" parent="MenuContainer/OptionsMenuContainer"]
+visible = true
+margin_left = 120.0
+margin_top = 80.0
+margin_right = 1160.0
+margin_bottom = 718.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+window_title = ""
+dialog_text = "Do you want to save the current keybindings?"
+
 [node name="OptionTabsContainer" type="TabContainer" parent="MenuContainer/OptionsMenuContainer"]
 margin_left = 120.0
 margin_top = 80.0
 margin_right = 1160.0
-margin_bottom = 640.0
+margin_bottom = 718.0
 
 [node name="Graphics" type="MarginContainer" parent="MenuContainer/OptionsMenuContainer/OptionTabsContainer"]
+visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_top = 46.0
@@ -103,13 +115,13 @@ script = ExtResource( 4 )
 margin_left = 15.0
 margin_top = 15.0
 margin_right = 1025.0
-margin_bottom = 499.0
+margin_bottom = 577.0
 custom_constants/separation = 50
 dragger_visibility = 1
 
 [node name="GraphicsOptionsContainer" type="VBoxContainer" parent="MenuContainer/OptionsMenuContainer/OptionTabsContainer/Graphics/HSplitContainer"]
 margin_right = 636.0
-margin_bottom = 484.0
+margin_bottom = 562.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 size_flags_stretch_ratio = 1.9
@@ -155,18 +167,18 @@ text = "On"
 [node name="RightContainer" type="VBoxContainer" parent="MenuContainer/OptionsMenuContainer/OptionTabsContainer/Graphics/HSplitContainer"]
 margin_left = 686.0
 margin_right = 1010.0
-margin_bottom = 484.0
+margin_bottom = 562.0
 size_flags_horizontal = 3
 
 [node name="FillerContainer" type="Container" parent="MenuContainer/OptionsMenuContainer/OptionTabsContainer/Graphics/HSplitContainer/RightContainer"]
 margin_right = 324.0
-margin_bottom = 434.0
+margin_bottom = 512.0
 size_flags_vertical = 3
 
 [node name="BackButton" type="Button" parent="MenuContainer/OptionsMenuContainer/OptionTabsContainer/Graphics/HSplitContainer/RightContainer"]
-margin_top = 438.0
+margin_top = 516.0
 margin_right = 324.0
-margin_bottom = 484.0
+margin_bottom = 562.0
 text = "Main Menu"
 
 [node name="Audio" type="MarginContainer" parent="MenuContainer/OptionsMenuContainer/OptionTabsContainer"]
@@ -184,7 +196,7 @@ script = ExtResource( 6 )
 margin_left = 15.0
 margin_top = 15.0
 margin_right = 1025.0
-margin_bottom = 499.0
+margin_bottom = 577.0
 custom_constants/separation = 50
 dragger_visibility = 1
 
@@ -254,7 +266,6 @@ margin_bottom = 484.0
 text = "Main Menu"
 
 [node name="Controls" type="MarginContainer" parent="MenuContainer/OptionsMenuContainer/OptionTabsContainer"]
-visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_top = 46.0
@@ -268,7 +279,7 @@ script = ExtResource( 7 )
 margin_left = 15.0
 margin_top = 15.0
 margin_right = 1025.0
-margin_bottom = 499.0
+margin_bottom = 577.0
 custom_constants/separation = 50
 dragger_visibility = 1
 
@@ -414,14 +425,28 @@ custom_constants/separation = 15
 
 [node name="FillerContainer" type="Container" parent="MenuContainer/OptionsMenuContainer/OptionTabsContainer/Controls/HSplitContainer/RightContainer"]
 margin_right = 324.0
-margin_bottom = 440.0
+margin_bottom = 379.0
 size_flags_vertical = 3
 
+[node name="SavedLabel" type="Label" parent="MenuContainer/OptionsMenuContainer/OptionTabsContainer/Controls/HSplitContainer/RightContainer"]
+visible = false
+margin_top = 394.0
+margin_right = 324.0
+margin_bottom = 440.0
+custom_colors/font_color = Color( 1, 0, 0, 1 )
+text = "Not Saved"
+
 [node name="BackButton" type="Button" parent="MenuContainer/OptionsMenuContainer/OptionTabsContainer/Controls/HSplitContainer/RightContainer"]
+margin_top = 394.0
+margin_right = 324.0
+margin_bottom = 440.0
+text = "Main Menu"
+
+[node name="ReturnToDefaultButton" type="Button" parent="MenuContainer/OptionsMenuContainer/OptionTabsContainer/Controls/HSplitContainer/RightContainer"]
 margin_top = 455.0
 margin_right = 324.0
 margin_bottom = 501.0
-text = "Main Menu"
+text = "Default Settings"
 
 [node name="SaveButton" type="Button" parent="MenuContainer/OptionsMenuContainer/OptionTabsContainer/Controls/HSplitContainer/RightContainer"]
 margin_top = 516.0
@@ -432,6 +457,7 @@ text = "Save"
 [connection signal="pressed" from="MenuContainer/MainMenuContainer/ButtonContainer/PlayButton" to="MenuContainer" method="_on_PlayButton_pressed"]
 [connection signal="pressed" from="MenuContainer/MainMenuContainer/ButtonContainer/OptionsButton" to="MenuContainer" method="_on_OptionsButton_pressed"]
 [connection signal="pressed" from="MenuContainer/MainMenuContainer/ButtonContainer/ExitButton" to="MenuContainer" method="_on_ExitButton_pressed"]
+[connection signal="confirmed" from="MenuContainer/OptionsMenuContainer/SaveConfirmDialog" to="MenuContainer/OptionsMenuContainer/OptionTabsContainer/Controls" method="_on_SaveConfirmDialog_confirmed"]
 [connection signal="item_selected" from="MenuContainer/OptionsMenuContainer/OptionTabsContainer/Graphics/HSplitContainer/GraphicsOptionsContainer/Resolution/ResolutionButton" to="MenuContainer/OptionsMenuContainer/OptionTabsContainer/Graphics" method="_on_ResolutionButton_item_selected"]
 [connection signal="toggled" from="MenuContainer/OptionsMenuContainer/OptionTabsContainer/Graphics/HSplitContainer/GraphicsOptionsContainer/Fullscreen/FullscreenButton" to="MenuContainer/OptionsMenuContainer/OptionTabsContainer/Graphics" method="_on_FullscreenButton_toggled"]
 [connection signal="pressed" from="MenuContainer/OptionsMenuContainer/OptionTabsContainer/Graphics/HSplitContainer/RightContainer/BackButton" to="MenuContainer" method="_on_BackButton_pressed"]
@@ -445,5 +471,6 @@ text = "Save"
 [connection signal="pressed" from="MenuContainer/OptionsMenuContainer/OptionTabsContainer/Controls/HSplitContainer/ControlsOptionsContainer/use_item_1/Button" to="MenuContainer/OptionsMenuContainer/OptionTabsContainer/Controls" method="_on_Button_UseItem1_pressed"]
 [connection signal="pressed" from="MenuContainer/OptionsMenuContainer/OptionTabsContainer/Controls/HSplitContainer/ControlsOptionsContainer/use_item_2/Button" to="MenuContainer/OptionsMenuContainer/OptionTabsContainer/Controls" method="_on_Button_UseItem2_pressed"]
 [connection signal="pressed" from="MenuContainer/OptionsMenuContainer/OptionTabsContainer/Controls/HSplitContainer/ControlsOptionsContainer/use_item_3/Button" to="MenuContainer/OptionsMenuContainer/OptionTabsContainer/Controls" method="_on_Button_UseItem3_pressed"]
-[connection signal="pressed" from="MenuContainer/OptionsMenuContainer/OptionTabsContainer/Controls/HSplitContainer/RightContainer/BackButton" to="MenuContainer" method="_on_BackButton_pressed"]
+[connection signal="pressed" from="MenuContainer/OptionsMenuContainer/OptionTabsContainer/Controls/HSplitContainer/RightContainer/BackButton" to="MenuContainer/OptionsMenuContainer/OptionTabsContainer/Controls" method="_on_BackButton_pressed"]
+[connection signal="pressed" from="MenuContainer/OptionsMenuContainer/OptionTabsContainer/Controls/HSplitContainer/RightContainer/ReturnToDefaultButton" to="MenuContainer/OptionsMenuContainer/OptionTabsContainer/Controls" method="_on_ReturnToDefaultButton_pressed"]
 [connection signal="pressed" from="MenuContainer/OptionsMenuContainer/OptionTabsContainer/Controls/HSplitContainer/RightContainer/SaveButton" to="MenuContainer/OptionsMenuContainer/OptionTabsContainer/Controls" method="_on_SaveButton_pressed"]
