@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://scripts/gamestate/GameMaster.cs" type="Script" id=1]
 [ext_resource path="res://assets/themes/MainMenuTheme.tres" type="Theme" id=2]
@@ -8,12 +8,22 @@
 [ext_resource path="res://scripts/settings/AudioOptions.gd" type="Script" id=6]
 [ext_resource path="res://scripts/settings/ControlOptions.gd" type="Script" id=7]
 
+[sub_resource type="DynamicFont" id=3]
+size = 75
+outline_size = 7
+outline_color = Color( 0, 0, 0, 1 )
+font_data = ExtResource( 5 )
+
 [sub_resource type="DynamicFont" id=1]
 size = 50
 font_data = ExtResource( 5 )
 
 [sub_resource type="DynamicFont" id=2]
 size = 50
+font_data = ExtResource( 5 )
+
+[sub_resource type="DynamicFont" id=4]
+size = 18
 font_data = ExtResource( 5 )
 
 [node name="Node2D" type="Node2D"]
@@ -24,13 +34,83 @@ script = ExtResource( 1 )
 [node name="MenuContainer" type="Container" parent="."]
 margin_right = 1280.0
 margin_bottom = 720.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
 theme = ExtResource( 2 )
 script = ExtResource( 3 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="BgRect" type="ColorRect" parent="MenuContainer"]
+margin_right = 1280.0
+margin_bottom = 720.0
+
 [node name="MainMenuContainer" type="MarginContainer" parent="MenuContainer"]
+margin_left = -1.41418
+margin_right = 1278.59
+margin_bottom = 720.0
+custom_constants/margin_right = 120
+custom_constants/margin_top = 80
+custom_constants/margin_left = 120
+custom_constants/margin_bottom = 80
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VSplitContainer" type="VSplitContainer" parent="MenuContainer/MainMenuContainer"]
+margin_left = 120.0
+margin_top = 80.0
+margin_right = 1160.0
+margin_bottom = 640.0
+custom_constants/separation = 30
+
+[node name="Title" type="Label" parent="MenuContainer/MainMenuContainer/VSplitContainer"]
+margin_right = 1040.0
+margin_bottom = 89.0
+custom_fonts/font = SubResource( 3 )
+text = "Garden Combat"
+align = 1
+
+[node name="HSplitContainer" type="HSplitContainer" parent="MenuContainer/MainMenuContainer/VSplitContainer"]
+margin_top = 119.0
+margin_right = 1040.0
+margin_bottom = 560.0
+
+[node name="ButtonContainer" type="VBoxContainer" parent="MenuContainer/MainMenuContainer/VSplitContainer/HSplitContainer"]
+margin_right = 410.0
+margin_bottom = 441.0
+size_flags_horizontal = 3
+custom_constants/separation = 40
+
+[node name="PlayButton" type="Button" parent="MenuContainer/MainMenuContainer/VSplitContainer/HSplitContainer/ButtonContainer"]
+margin_right = 410.0
+margin_bottom = 120.0
+size_flags_vertical = 3
+text = "Play"
+
+[node name="OptionsButton" type="Button" parent="MenuContainer/MainMenuContainer/VSplitContainer/HSplitContainer/ButtonContainer"]
+margin_top = 160.0
+margin_right = 410.0
+margin_bottom = 280.0
+size_flags_vertical = 3
+text = "Options"
+
+[node name="ExitButton" type="Button" parent="MenuContainer/MainMenuContainer/VSplitContainer/HSplitContainer/ButtonContainer"]
+margin_top = 320.0
+margin_right = 410.0
+margin_bottom = 441.0
+size_flags_vertical = 3
+text = "Exit"
+
+[node name="Container" type="Container" parent="MenuContainer/MainMenuContainer/VSplitContainer/HSplitContainer"]
+margin_left = 422.0
+margin_right = 1040.0
+margin_bottom = 441.0
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 1.5
+
+[node name="PlayMenuContainer" type="MarginContainer" parent="MenuContainer"]
 visible = false
 margin_left = -1.41418
 margin_right = 1278.59
@@ -43,34 +123,79 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="ButtonContainer" type="VBoxContainer" parent="MenuContainer/MainMenuContainer"]
+[node name="Panel" type="Panel" parent="MenuContainer/PlayMenuContainer"]
 margin_left = 120.0
 margin_top = 80.0
 margin_right = 1160.0
 margin_bottom = 640.0
-custom_constants/separation = 40
 
-[node name="PlayButton" type="Button" parent="MenuContainer/MainMenuContainer/ButtonContainer"]
-margin_right = 1040.0
-margin_bottom = 160.0
-size_flags_vertical = 3
-text = "Play"
-
-[node name="OptionsButton" type="Button" parent="MenuContainer/MainMenuContainer/ButtonContainer"]
-margin_top = 200.0
-margin_right = 1040.0
-margin_bottom = 360.0
-size_flags_vertical = 3
-text = "Options"
-
-[node name="ExitButton" type="Button" parent="MenuContainer/MainMenuContainer/ButtonContainer"]
-margin_top = 400.0
+[node name="HSplitContainer" type="HSplitContainer" parent="MenuContainer/PlayMenuContainer/Panel"]
+anchor_bottom = 0.03
 margin_right = 1040.0
 margin_bottom = 560.0
-size_flags_vertical = 3
-text = "Exit"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ConnectOptions" type="VBoxContainer" parent="MenuContainer/PlayMenuContainer/Panel/HSplitContainer"]
+margin_right = 514.0
+margin_bottom = 576.8
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.55
+custom_constants/separation = 10
+
+[node name="Label" type="Label" parent="MenuContainer/PlayMenuContainer/Panel/HSplitContainer/ConnectOptions"]
+margin_right = 514.0
+margin_bottom = 46.0
+size_flags_vertical = 5
+text = "Room ID:"
+
+[node name="RoomIdBox" type="LineEdit" parent="MenuContainer/PlayMenuContainer/Panel/HSplitContainer/ConnectOptions"]
+margin_top = 56.0
+margin_right = 514.0
+margin_bottom = 102.0
+text = "0000"
+
+[node name="NameBox" type="LineEdit" parent="MenuContainer/PlayMenuContainer/Panel/HSplitContainer/ConnectOptions"]
+margin_top = 112.0
+margin_right = 514.0
+margin_bottom = 158.0
+text = "Name"
+
+[node name="ConnectButton" type="Button" parent="MenuContainer/PlayMenuContainer/Panel/HSplitContainer/ConnectOptions"]
+margin_top = 168.0
+margin_right = 514.0
+margin_bottom = 214.0
+text = "Connect"
+
+[node name="CreateOptions" type="VBoxContainer" parent="MenuContainer/PlayMenuContainer/Panel/HSplitContainer"]
+margin_left = 526.0
+margin_right = 1040.0
+margin_bottom = 576.8
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.55
+custom_constants/separation = 10
+
+[node name="Label" type="Label" parent="MenuContainer/PlayMenuContainer/Panel/HSplitContainer/CreateOptions"]
+margin_right = 514.0
+margin_bottom = 46.0
+size_flags_vertical = 5
+text = "Create Room"
+
+[node name="NameBox" type="LineEdit" parent="MenuContainer/PlayMenuContainer/Panel/HSplitContainer/CreateOptions"]
+margin_top = 56.0
+margin_right = 514.0
+margin_bottom = 102.0
+text = "Name"
+
+[node name="CreateButton" type="Button" parent="MenuContainer/PlayMenuContainer/Panel/HSplitContainer/CreateOptions"]
+margin_top = 112.0
+margin_right = 514.0
+margin_bottom = 158.0
+text = "Create"
 
 [node name="OptionsMenuContainer" type="MarginContainer" parent="MenuContainer"]
+visible = false
 margin_left = -1.41418
 margin_right = 1278.59
 margin_bottom = 720.0
@@ -88,7 +213,7 @@ visible = true
 margin_left = 120.0
 margin_top = 80.0
 margin_right = 1160.0
-margin_bottom = 718.0
+margin_bottom = 640.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 window_title = ""
@@ -98,10 +223,9 @@ dialog_text = "Do you want to save the current keybindings?"
 margin_left = 120.0
 margin_top = 80.0
 margin_right = 1160.0
-margin_bottom = 718.0
+margin_bottom = 640.0
 
 [node name="Graphics" type="MarginContainer" parent="MenuContainer/OptionsMenuContainer/OptionTabsContainer"]
-visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_top = 46.0
@@ -115,13 +239,13 @@ script = ExtResource( 4 )
 margin_left = 15.0
 margin_top = 15.0
 margin_right = 1025.0
-margin_bottom = 577.0
+margin_bottom = 499.0
 custom_constants/separation = 50
 dragger_visibility = 1
 
 [node name="GraphicsOptionsContainer" type="VBoxContainer" parent="MenuContainer/OptionsMenuContainer/OptionTabsContainer/Graphics/HSplitContainer"]
 margin_right = 636.0
-margin_bottom = 562.0
+margin_bottom = 484.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 size_flags_stretch_ratio = 1.9
@@ -167,18 +291,18 @@ text = "On"
 [node name="RightContainer" type="VBoxContainer" parent="MenuContainer/OptionsMenuContainer/OptionTabsContainer/Graphics/HSplitContainer"]
 margin_left = 686.0
 margin_right = 1010.0
-margin_bottom = 562.0
+margin_bottom = 484.0
 size_flags_horizontal = 3
 
 [node name="FillerContainer" type="Container" parent="MenuContainer/OptionsMenuContainer/OptionTabsContainer/Graphics/HSplitContainer/RightContainer"]
 margin_right = 324.0
-margin_bottom = 512.0
+margin_bottom = 434.0
 size_flags_vertical = 3
 
 [node name="BackButton" type="Button" parent="MenuContainer/OptionsMenuContainer/OptionTabsContainer/Graphics/HSplitContainer/RightContainer"]
-margin_top = 516.0
+margin_top = 438.0
 margin_right = 324.0
-margin_bottom = 562.0
+margin_bottom = 484.0
 text = "Main Menu"
 
 [node name="Audio" type="MarginContainer" parent="MenuContainer/OptionsMenuContainer/OptionTabsContainer"]
@@ -196,7 +320,7 @@ script = ExtResource( 6 )
 margin_left = 15.0
 margin_top = 15.0
 margin_right = 1025.0
-margin_bottom = 577.0
+margin_bottom = 499.0
 custom_constants/separation = 50
 dragger_visibility = 1
 
@@ -266,6 +390,7 @@ margin_bottom = 484.0
 text = "Main Menu"
 
 [node name="Controls" type="MarginContainer" parent="MenuContainer/OptionsMenuContainer/OptionTabsContainer"]
+visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_top = 46.0
@@ -279,7 +404,7 @@ script = ExtResource( 7 )
 margin_left = 15.0
 margin_top = 15.0
 margin_right = 1025.0
-margin_bottom = 577.0
+margin_bottom = 499.0
 custom_constants/separation = 50
 dragger_visibility = 1
 
@@ -454,9 +579,127 @@ margin_right = 324.0
 margin_bottom = 562.0
 text = "Save"
 
-[connection signal="pressed" from="MenuContainer/MainMenuContainer/ButtonContainer/PlayButton" to="MenuContainer" method="_on_PlayButton_pressed"]
-[connection signal="pressed" from="MenuContainer/MainMenuContainer/ButtonContainer/OptionsButton" to="MenuContainer" method="_on_OptionsButton_pressed"]
-[connection signal="pressed" from="MenuContainer/MainMenuContainer/ButtonContainer/ExitButton" to="MenuContainer" method="_on_ExitButton_pressed"]
+[node name="LobbyMenuContainer" type="MarginContainer" parent="MenuContainer"]
+visible = false
+margin_left = -1.41418
+margin_right = 1278.59
+margin_bottom = 720.0
+custom_constants/margin_right = 120
+custom_constants/margin_top = 80
+custom_constants/margin_left = 120
+custom_constants/margin_bottom = 80
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Panel" type="Panel" parent="MenuContainer/LobbyMenuContainer"]
+margin_left = 120.0
+margin_top = 80.0
+margin_right = 1160.0
+margin_bottom = 640.0
+
+[node name="HSplitContainer" type="HSplitContainer" parent="MenuContainer/LobbyMenuContainer"]
+margin_left = 120.0
+margin_top = 80.0
+margin_right = 1160.0
+margin_bottom = 640.0
+custom_constants/separation = 20
+dragger_visibility = 1
+
+[node name="Chat" type="VBoxContainer" parent="MenuContainer/LobbyMenuContainer/HSplitContainer"]
+margin_right = 510.0
+margin_bottom = 560.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_constants/separation = 10
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextEdit" type="TextEdit" parent="MenuContainer/LobbyMenuContainer/HSplitContainer/Chat"]
+margin_right = 510.0
+margin_bottom = 504.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+readonly = true
+show_line_numbers = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HSplitContainer" type="HSplitContainer" parent="MenuContainer/LobbyMenuContainer/HSplitContainer/Chat"]
+margin_top = 514.0
+margin_right = 510.0
+margin_bottom = 560.0
+
+[node name="LineEdit" type="LineEdit" parent="MenuContainer/LobbyMenuContainer/HSplitContainer/Chat/HSplitContainer"]
+margin_right = 334.0
+margin_bottom = 46.0
+size_flags_horizontal = 3
+
+[node name="SendButton" type="Button" parent="MenuContainer/LobbyMenuContainer/HSplitContainer/Chat/HSplitContainer"]
+margin_left = 346.0
+margin_right = 510.0
+margin_bottom = 46.0
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.5
+text = "Send"
+
+[node name="LobbyOptions" type="VBoxContainer" parent="MenuContainer/LobbyMenuContainer/HSplitContainer"]
+margin_left = 530.0
+margin_right = 1040.0
+margin_bottom = 560.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="HSplitContainer" type="HSplitContainer" parent="MenuContainer/LobbyMenuContainer/HSplitContainer/LobbyOptions"]
+margin_right = 510.0
+margin_bottom = 46.0
+
+[node name="Container" type="Label" parent="MenuContainer/LobbyMenuContainer/HSplitContainer/LobbyOptions/HSplitContainer"]
+margin_top = 12.0
+margin_right = 307.0
+margin_bottom = 34.0
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.75
+custom_fonts/font = SubResource( 4 )
+text = "Room ID: 00000000000000000000000"
+
+[node name="LeaveButton" type="Button" parent="MenuContainer/LobbyMenuContainer/HSplitContainer/LobbyOptions/HSplitContainer"]
+margin_left = 319.0
+margin_right = 510.0
+margin_bottom = 46.0
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.5
+text = "Leave"
+
+[node name="PlayerList" type="VBoxContainer" parent="MenuContainer/LobbyMenuContainer/HSplitContainer/LobbyOptions"]
+margin_top = 50.0
+margin_right = 510.0
+margin_bottom = 96.0
+
+[node name="Player1Label" type="Label" parent="MenuContainer/LobbyMenuContainer/HSplitContainer/LobbyOptions/PlayerList"]
+margin_right = 510.0
+margin_bottom = 46.0
+text = "Player1"
+
+[node name="Container" type="Container" parent="MenuContainer/LobbyMenuContainer/HSplitContainer/LobbyOptions"]
+margin_top = 100.0
+margin_right = 510.0
+margin_bottom = 510.0
+size_flags_vertical = 3
+
+[node name="StartButton" type="Button" parent="MenuContainer/LobbyMenuContainer/HSplitContainer/LobbyOptions"]
+margin_top = 514.0
+margin_right = 510.0
+margin_bottom = 560.0
+text = "Start Game"
+
+[node name="BgTween" type="Tween" parent="MenuContainer"]
+
+[connection signal="pressed" from="MenuContainer/MainMenuContainer/VSplitContainer/HSplitContainer/ButtonContainer/PlayButton" to="MenuContainer" method="_on_PlayButton_pressed"]
+[connection signal="pressed" from="MenuContainer/MainMenuContainer/VSplitContainer/HSplitContainer/ButtonContainer/OptionsButton" to="MenuContainer" method="_on_OptionsButton_pressed"]
+[connection signal="pressed" from="MenuContainer/MainMenuContainer/VSplitContainer/HSplitContainer/ButtonContainer/ExitButton" to="MenuContainer" method="_on_ExitButton_pressed"]
 [connection signal="confirmed" from="MenuContainer/OptionsMenuContainer/SaveConfirmDialog" to="MenuContainer/OptionsMenuContainer/OptionTabsContainer/Controls" method="_on_SaveConfirmDialog_confirmed"]
 [connection signal="item_selected" from="MenuContainer/OptionsMenuContainer/OptionTabsContainer/Graphics/HSplitContainer/GraphicsOptionsContainer/Resolution/ResolutionButton" to="MenuContainer/OptionsMenuContainer/OptionTabsContainer/Graphics" method="_on_ResolutionButton_item_selected"]
 [connection signal="toggled" from="MenuContainer/OptionsMenuContainer/OptionTabsContainer/Graphics/HSplitContainer/GraphicsOptionsContainer/Fullscreen/FullscreenButton" to="MenuContainer/OptionsMenuContainer/OptionTabsContainer/Graphics" method="_on_FullscreenButton_toggled"]
@@ -474,3 +717,4 @@ text = "Save"
 [connection signal="pressed" from="MenuContainer/OptionsMenuContainer/OptionTabsContainer/Controls/HSplitContainer/RightContainer/BackButton" to="MenuContainer/OptionsMenuContainer/OptionTabsContainer/Controls" method="_on_BackButton_pressed"]
 [connection signal="pressed" from="MenuContainer/OptionsMenuContainer/OptionTabsContainer/Controls/HSplitContainer/RightContainer/ReturnToDefaultButton" to="MenuContainer/OptionsMenuContainer/OptionTabsContainer/Controls" method="_on_ReturnToDefaultButton_pressed"]
 [connection signal="pressed" from="MenuContainer/OptionsMenuContainer/OptionTabsContainer/Controls/HSplitContainer/RightContainer/SaveButton" to="MenuContainer/OptionsMenuContainer/OptionTabsContainer/Controls" method="_on_SaveButton_pressed"]
+[connection signal="tween_all_completed" from="MenuContainer/BgTween" to="MenuContainer" method="_on_BgTween_tween_all_completed"]

@@ -6,9 +6,17 @@ func _ready():
 	#Storing node objects
 	screens.append(get_node("MainMenuContainer"))
 	screens.append(get_node("OptionsMenuContainer"))
+	screens.append(get_node("PlayMenuContainer"))
+
+	var bgRect = get_node("BgRect")
+	var bgTween = get_node("BgTween")
+	bgTween.interpolate_property(bgRect, "color", Color.blue-Color(0,0,0,0.5), Color.green-Color(0,0,0,0.5), 10, Tween.TRANS_LINEAR)
+	bgTween.start()
 
 #func _process(delta):
-#	pass
+#
+
+
 
 func _navigateToScreen(targetScreen):
 	#Hides all screens and shows target screen
@@ -26,7 +34,7 @@ func _unhandled_input(event):
 
 func _on_PlayButton_pressed():
 	#Navigates to play menu
-	_navigateToScreen(screens[0])
+	_navigateToScreen(screens[2])
 
 
 func _on_OptionsButton_pressed():
@@ -48,3 +56,16 @@ func _on_BackButton_pressed():
 func _on_SaveConfirmDialog_confirmed():
 	#Saving keybind settings
 	Keybinds.SaveBindings()
+
+
+func _on_BgTween_tween_all_completed():
+	print("called")
+	var bgTween = get_node("BgTween")
+	var bgRect = get_node("BgRect")
+	
+	bgTween.reset_all()
+	if(bgRect.color == Color.green-Color(0,0,0,0.5)):
+		bgTween.interpolate_property(bgRect, "color", Color.green-Color(0,0,0,0.5), Color.blue-Color(0,0,0,0.5), 10, Tween.TRANS_LINEAR)
+	else:
+		bgTween.interpolate_property(bgRect, "color", Color.blue-Color(0,0,0,0.5), Color.green-Color(0,0,0,0.5), 10, Tween.TRANS_LINEAR)
+	bgTween.start()
