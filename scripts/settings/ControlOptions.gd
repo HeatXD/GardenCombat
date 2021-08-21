@@ -4,18 +4,21 @@ var bindingsChanged = false
 
 var canChangeKey = false
 var actionString
-enum ACTIONS {move_up, move_down, move_left, move_right, use_item_1, use_item_2, use_item_3}
+enum ACTIONS {move_up, move_down, move_left, move_right, select_item_1, select_item_2, select_item_3, use_selected_item}
 
 func _ready():
 	_setKeys()
 
 func _setKeys():
 	for action in ACTIONS:
-		get_node("HSplitContainer/ControlsOptionsContainer/" + str(action) + "/Button").set_pressed(false)
+		get_node("HSplitContainer/ScrollContainer/ControlsOptionsContainer/" + str(action) + "/Button").set_pressed(false)
 		if !InputMap.get_action_list(action).empty():
-			get_node("HSplitContainer/ControlsOptionsContainer/" + str(action) + "/Button").set_text(InputMap.get_action_list(action)[0].as_text())
+			var text = InputMap.get_action_list(action)[0].as_text()
+			if("InputEventMouseButton" in text):
+				text = ButtonList.ButtonText[InputMap.get_action_list(action)[0].button_index]
+			get_node("HSplitContainer/ScrollContainer/ControlsOptionsContainer/" + str(action) + "/Button").set_text(text)
 		else:
-			get_node("HSplitContainer/ControlsOptionsContainer/" + str(action) + "/Button").set_text("Not Mapped")
+			get_node("HSplitContainer/ScrollContainer//ControlsOptionsContainer/" + str(action) + "/Button").set_text("Not Mapped")
 
 func _markButton(string):
 	canChangeKey = true
@@ -23,7 +26,7 @@ func _markButton(string):
 
 	for action in ACTIONS:
 		if action != string:
-			get_node("HSplitContainer/ControlsOptionsContainer/" + str(action) + "/Button").set_pressed(false)
+			get_node("HSplitContainer/ScrollContainer/ControlsOptionsContainer/" + str(action) + "/Button").set_pressed(false)
 
 func _changeKey(newKey):
 	#Delete key of pressed button
@@ -45,7 +48,7 @@ func _changeKey(newKey):
 	_setKeys()
 
 func _input(event):
-	if event is InputEventKey:
+	if event is InputEventKey || event is InputEventMouseButton:
 		if canChangeKey:
 			_changeKey(event)
 			canChangeKey = false
@@ -77,16 +80,18 @@ func _on_Button_MoveLeft_pressed():
 
 
 func _on_Button_UseItem1_pressed():
-	_markButton("use_item_1")
+	_markButton("select_item_1")
 
 
 func _on_Button_UseItem2_pressed():
-	_markButton("use_item_2")
+	_markButton("select_item_2")
 
 
 func _on_Button_UseItem3_pressed():
-	_markButton("use_item_3")
+	_markButton("select_item_3")
 
+func _on_Button_UseSelectedItem_pressed():
+	_markButton("use_selected_item")
 
 func _on_SaveButton_pressed():
 	_saveBindings()
