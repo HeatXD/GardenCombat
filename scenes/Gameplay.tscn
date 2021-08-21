@@ -2,7 +2,7 @@
 
 [ext_resource path="res://scripts/gamestate/GameMaster.cs" type="Script" id=1]
 
-[node name="Node2D" type="Node2D"]
+[node name="Node2D" type="Node"]
 
 [node name="GameMaster" type="Node2D" parent="."]
 script = ExtResource( 1 )

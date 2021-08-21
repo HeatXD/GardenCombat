@@ -15,6 +15,6 @@ public static class Maps
 	}
 	public static MapData GetLevel1()
 	{
-		return new MapData(5, 5, "0000001110011100561000000");
+		return new MapData(5, 5, "0123456701234567561000000");
 	}
 }

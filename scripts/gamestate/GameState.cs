@@ -3,45 +3,41 @@ using System;
 using AF = Abacus.Fixed64Precision;
 
 public struct GameState
-{
+{	
+	public int Frame;
 	public TileState[,] GameMap;
 	public Maps.MapData GameMapData;
 	public Player[] Players;
-	public GameState(Maps.MapData mapData, byte playerCount)
+	public byte LocalID;
+	public GameState(Maps.MapData mapData, byte playerCount, byte localID)
 	{
 		//create 2d array with specified width and height
 		this.GameMap = new TileState[mapData.Width, mapData.Height];
 		this.GameMapData = mapData;
 		this.Players = new Player[playerCount];
+		this.LocalID = localID;
+		this.Frame = 0;
 
-		for (sbyte i = 0; i < Players.Length; i++)
+		for (byte i = 0; i < Players.Length; i++)
 		{
-			this.Players[i].ID = i;
+			this.Players[i] = new Player(i);
 		}
 
 		this.GameMap = _generateMap(mapData);
 	}
 
-	public void MainLoop(AF.Fixed64 dt)
+	public void Update(AF.Fixed64 dt)
 	{
 		_updateState(dt);
-		_drawState(dt);
 	}
 
 	private void _updateState(AF.Fixed64 dt)
 	{
 		for (int i = 0; i < Players.Length; i++)
 		{
-			Players[i].GetInput();
-			Players[i].Update(dt);
+			Players[i].Update(dt, LocalID);
 		}
 	}
-
-	private void _drawState(AF.Fixed64 dt)
-	{
-		throw new NotImplementedException();
-	}
-
 
 	private TileState[,] _generateMap(Maps.MapData mapData)
 	{
